@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MARAGIA  FARM | Premium Tea Seedlings & Flowers</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--fire:#FF4500;--gold:#F5A623;--bg:#0A0501}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',Arial,sans-serif;background:var(--bg);color:#fff;overflow-x:hidden}
+
+/* Particles */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:1}
+.particle{position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;opacity:0.4;animation:float 15s infinite}
+@keyframes float{0%{transform:translateY(100vh);opacity:0}10%{opacity:0.6}90%{opacity:0.6}100%{transform:translateY(-100vh);opacity:0}}
+
+/* Top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,5,1,0.8);backdrop-filter:blur(10px)}
+.logo-top{font-family:'Bebas Neue',Arial;font-size:1.5rem;background:linear-gradient(90deg,var(--gold) 0%,var(--fire) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.menu-toggle{width:40px;height:40px;background:var(--gold);border-radius:50%;border:none;cursor:pointer;font-size:1.5rem;color:var(--bg)}
+
+/* Menu overlay */
+.menu-overlay{position:fixed;inset:0;background:rgba(10,5,1,0.98);z-index:200;display:none;align-items:center;justify-content:center}
+.menu-overlay.open{display:flex}
+.menu-list{text-align:center}
+.menu-list a{display:block;font-family:'Bebas Neue',Arial;font-size:3rem;letter-spacing:2px;color:#fff;text-decoration:none;margin:25px 0;transition:.3s}
+.menu-list a:hover{color:var(--gold);transform:scale(1.05)}
+.menu-close{position:absolute;top:30px;right:30px;font-size:2.5rem;color:var(--gold);background:none;border:none;cursor:pointer}
+
+/* Cart */
+.cart-btn{position:fixed;top:80px;right:20px;z-index:150;background:var(--fire);width:60px;height:60px;border-radius:50%;border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(255,69,0,0.4)}
+.cart-count{position:absolute;top:-5px;right:-5px;background:var(--gold);color:var(--bg);width:24px;height:24px;border-radius:50%;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.cart-sidebar{position:fixed;top:0;right:-400px;width:350px;max-width:90vw;height:100vh;background:#1A0C04;border-left:2px solid var(--gold);z-index:300;transition:right.4s;padding:30px 20px;overflow-y:auto}
+.cart-sidebar.open{right:0}
+.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
+.cart-header h3{font-family:'Bebas Neue',Arial;font-size:1.8rem;color:var(--gold)}
+.cart-close{background:none;border:none;color:#fff;font-size:2rem;cursor:pointer}
+.cart-item{display:flex;gap:12px;margin-bottom:15px;padding:12px;background:rgba(245,166,35,0.05);border-radius:8px}
+.cart-item img{width:60px;height:60px;object-fit:cover;border-radius:6px}
+.cart-item-info{flex:1}
+.cart-item-info h4{font-size:.9rem;color:var(--gold);margin-bottom:3px}
+.qty-controls{display:flex;gap:8px;margin-top:5px}
+.qty-btn{background:var(--fire);border:none;color:#fff;width:24px;height:24px;border-radius:4px;cursor:pointer}
+.checkout-btn{width:100%;padding:12px;background:var(--fire);border:none;color:#fff;border-radius:6px;font-weight:600;cursor:pointer;margin-top:15px}
+
+/* Speak to Expert */
+.expert-btn{position:hoover;bottom:0px;left:0px;z-index:150;background:var(--white);padding:14px 22px;border-radius:50px;border:none;color:#808080(--bg);font-weight:600;font-size:.9rem;cursor:pointer;box-shadow:0 4px 20px rgba(245,166,35,0.4);display:flex;align-items:center;gap:8px}
+
+/* Header */
+header{position:relative;z-index:2;text-align:center;padding:100px 20px 30px}
+.logo-img{max-width:140px;width:100%;filter:drop-shadow(0 0 25px rgba(245,166,35,0.4))}
+
+/* Hero */
+.hero{text-align:center;padding:0 20px 80px}
+.hero-tag{font-size:.7rem;letter-spacing:.2em;color:var(--gold);margin-bottom:20px}
+h1{font-family:'Bebas Neue',Arial;font-size:clamp(3.5rem,12vw,7rem);line-height:0.9;margin-bottom:25px}
+h1.white{color:#fff}
+h1.gold{color:var(--gold);display:block}
+.tagline{font-style:italic;color:rgba(255,255,255,0.8);font-size:1rem;max-width:320px;margin:0 auto 35px}
+
+/* Badges */
+.badges{display:flex;flex-direction:column;gap:12px;align-items:center;margin-bottom:35px}
+.badge{background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.25);border-radius:50px;padding:10px 22px;font-size:.85rem;display:flex;align-items:center;gap:8px}
+
+/* Buttons */
+.btn-group{display:flex;flex-direction:column;gap:12px;align-items:center}
+.btn{display:block;width:280px;max-width:90%;padding:16px 30px;border-radius:8px;font-weight:600;font-size:1rem;letter-spacing:1px;text-decoration:none;text-align:center;transition:.3s;cursor:pointer;border:none}
+.btn-primary{background:var(--fire);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);background:#e03d00}
+.btn-outline{background:transparent;color:var(--gold);border:2px solid var(--gold)}
+.btn-outline:hover{background:rgba(245,166,35,0.1)}
+
+/* 3D Slider Section */
+.slider-section{position:relative;z-index:2;padding:70px 20px;background:linear-gradient(180deg,rgba(245,166,35,0.05) 0%,transparent 100%)}
+.slider-section h2{font-family:'Bebas Neue',Arial;font-size:2.5rem;color:var(--gold);text-align:center;margin-bottom:40px;letter-spacing:1px}
+.swiper{width:100%;padding-top:50px;padding-bottom:80px}
+.swiper-slide{width:280px;height:420px}
+.slide-card{background:#1A0C04;border:1px solid rgba(245,166,35,0.2);border-radius:16px;overflow:hidden;height:100%;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.slide-card img{width:100%;height:220px;object-fit:cover}
+.slide-body{padding:18px;display:flex;flex-direction:column;flex:1}
+.slide-body h3{color:var(--gold);font-family:'Bebas Neue',Arial;font-size:1.4rem;margin-bottom:8px}
+.slide-body p{font-size:.85rem;color:#bbb;margin-bottom:12px;flex:1}
+.slide-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.cat-pill{font-size:.65rem;padding:3px 8px;background:rgba(245,166,35,0.15);border-radius:12px;color:var(--gold)}
+.btn-shop{padding:11px;background:var(--fire);border:none;color:#fff;border-radius:6px;font-weight:600;font-size:.85rem;cursor:pointer;text-align:center;text-decoration:none;display:block;transition:.3s}
+.btn-shop:hover{background:#e03d00}
+.swiper-pagination-bullet{background:var(--gold);opacity:0.4}
+.swiper-pagination-bullet-active{opacity:1;width:24px;border-radius:8px}
+
+/* Sections */
+section{position:relative;z-index:2;padding:70px 20px;max-width:1100px;margin:auto}
+h2{font-family:'Bebas Neue',Arial;font-size:2.5rem;color:var(--gold);text-align:center;margin-bottom:15px;letter-spacing:1px}
+.section-label{font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:8px}
+.section-sub{color:rgba(255,255,255,0.6);text-align:center;font-size:.95rem;max-width:500px;margin:0 auto 40px}
+
+/* About Us */
+.about{background:rgba(26,12,4,0.6);border:1px solid rgba(245,166,35,0.1);border-radius:16px;padding:50px 30px;margin-top:40px}
+.about-content{max-width:700px;margin:auto;text-align:center}
+.about p{color:#ccc;line-height:1.8;font-size:1rem;margin-bottom:15px}
+
+/* Search + Categories */
+.search-wrap{max-width:600px;margin:0 auto 30px}
+.search-bar{width:100%;padding:14px 20px;background:rgba(26,12,4,0.8);border:2px solid rgba(245,166,35,0.3);border-radius:50px;color:#fff;font-size:1rem;font-family:inherit;outline:none}
+.search-bar:focus{border-color:var(--gold);box-shadow:0 0 20px rgba(245,166,35,0.2)}
+.category-filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:30px}
+.cat-btn{padding:8px 18px;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);border-radius:25px;color:#fff;font-size:.85rem;cursor:pointer;transition:.3s}
+.cat-btn.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px}
+.card{background:rgba(26,12,4,0.8);border:1px solid rgba(245,166,35,0.1);border-radius:12px;overflow:hidden;transition:.3s;position:relative}
+.card:hover{transform:translateY(-6px);border-color:var(--gold)}
+.card img{width:100%;height:200px;object-fit:cover}
+.card-body{padding:18px}
+.card h3{color:var(--gold);font-family:'Bebas Neue',Arial;font-size:1.4rem;margin-bottom:6px}
+.card p{font-size:.9rem;color:#bbb;margin-bottom:8px}
+.dop{font-size:.75rem;color:#4ade80}
+.tag{position:absolute;top:12px;left:12px;background:var(--fire);color:#fff;font-size:.7rem;padding:4px 10px;border-radius:20px;font-weight:600}
+.img-wrap{position:relative}
+.product-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.cat-pill{font-size:.65rem;padding:3px 8px;background:rgba(245,166,35,0.15);border-radius:12px;color:var(--gold)}
+
+/* Product buttons - NO PRICE */
+.product-btns{display:flex;gap:8px;margin-top:12px}
+.product-btns button{flex:1;padding:11px;border:none;border-radius:6px;font-weight:600;font-size:.85rem;cursor:pointer;transition:.3s}
+.btn-add{background:var(--gold);color:var(--bg)}
+.btn-add:hover{background:#e0941f}
+.btn-order{background:var(--fire);color:#fff}
+.btn-order:hover{background:#e03d00}
+
+/* M-Pesa modal - no amount shown */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:400;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modal-box{background:#1A0C04;border:2px solid var(--gold);border-radius:12px;padding:25px;max-width:400px;width:100%}
+.modal-box h3{color:var(--gold);font-family:'Bebas Neue',Arial;font-size:1.5rem;margin-bottom:15px}
+.modal-box p{color:#bbb;font-size:.9rem;margin-bottom:15px}
+.modal-box input{width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(245,166,35,0.3);border-radius:6px;color:#fff;margin-bottom:12px}
+.modal-box button{width:100%;padding:12px;background:var(--fire);border:none;color:#fff;border-radius:6px;font-weight:600;cursor:pointer;margin-top:8px}
+
+/* Gallery + Contact */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin-top:30px}
+.gallery img{width:100%;height:250px;object-fit:cover;border-radius:10px;border:2px solid rgba(245,166,35,0.15)}
+.contact{text-align:center}
+footer{text-align:center;padding:30px;color:#777;font-size:.9rem;border-top:1px solid rgba(245,166,35,0.1)}
+
+/* Ticker */
+.ticker{position:fixed;bottom:0;left:0;right:0;background:var(--fire);padding:14px 0;overflow:hidden;z-index:3}
+.ticker-track{display:flex;gap:60px;animation:scroll 20s linear infinite;white-space:nowrap}
+.ticker span{font-family:'Bebas Neue',Arial;font-size:1.1rem;letter-spacing:2px;color:#fff}
+.ticker.dot{color:var(--gold);font-size:1.3rem}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.no-results{text-align:center;color:#666;padding:60px 20px;font-size:1.1rem}
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Top bar -->
+<div class="logo-top">
+MARAGIA   FARM </div>
+<button class="menu-toggle" onclick="toggleMenu()">☰</button>
+</div>
+
+<!-- Menu overlay -->
+<div class="menu-overlay" id="menuOverlay">
+<button class="menu-close" onclick="toggleMenu()">✕</button>
+<div class="menu-list">
+<a href="#home" onclick="toggleMenu()">HOME</a>
+<a href="#about" onclick="toggleMenu()">ABOUT US</a>
+<a href="#featured" onclick="toggleMenu()">FEATURED</a>
+<a href="#clones" onclick="toggleMenu()">TEA CLONES</a>
+<a href="#gallery" onclick="toggleMenu()">GALLERY</a>
+<a href="#contact" onclick="toggleMenu()">CONTACT</a>
+</div>
+</div>
+
+<!-- Cart button -->
+<button class="cart-btn" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></button>
+
+<!-- Speak to Expert button -->
+<button class="expert-btn" onclick="speakToExpert()">💬 Speak to Expert</button>
+
+<!-- Cart sidebar -->
+<div class="cart-sidebar" id="cartSidebar">
+<div class="cart-header">
+<h3>Your Cart</h3>
+<button class="cart-close" onclick="toggleCart()">✕</button>
+</div>
+<div id="cartItems"></div>
+<button class="checkout-btn" onclick="checkoutWhatsApp()">Order via WhatsApp</button>
+</div>
+
+<!-- M-Pesa Modal - NO AMOUNT -->
+<div class="modal" id="mpesaModal">
+<div class="modal-box">
+<h3>Complete Your Order</h3>
+<p>Pay via M-Pesa to Till 123456. After payment, paste confirmation SMS below:</p>
+<input type="text" id="mpesaCode" placeholder="RQ71YH2K9M Confirmed...">
+<button onclick="confirmMpesa()">Send Order</button>
+<button onclick="closeMpesa()" style="background:#333">Cancel</button>
+</div>
+</div>
+
+<header id="home">
+<img src="images/logo.png" alt="MARAGIA FARM Logo" class="logo-img">
+</header>
+
+<section class="hero">
+<p class="hero-tag">🔥  PREMIUM NURSERY • </p>
+<h1><span class="white">MARAGIA</span><span class="gold"> FARM </span></h1>
+<p class="tagline"> Certified Clones & Ornamentals — Grown, Hardened & Ready for Your Farm</p>
+
+<div class="badges">
+<div class="badge">📍 Metamaywa, Near Keroka Town</div>
+<div class="badge">🌱 Planted April 2025</div>
+<div class="badge">🚚 Delivery to All Counties</div>
+</div>
+
+<div class="btn-group">
+<a href="#clones" class="btn btn-primary">Catalogue</a>
+<a href="tel:0713368520" class="btn btn-outline">📞 Give us a call</a>
+</div>
+</section>
+
+<!-- About Us -->
+<section id="about">
+<p class="section-label">Who We Are</p>
+<h2>About MARAGIA FARM</h2>
+<div class="about">
+<div class="about-content">
+<p>MARAGIA FARM is a TRFK-certified tea nursery based in Metamaywa Settlement Scheme, near Keroka Town, Nyamira County.</p>
+<p>We specialize in growing, hardening, and supplying premium tea seedlings + ornamental flowers to farmers and homeowners across Kenya.</p>
+<p>Contact us for pricing and availability. Our team will guide you on the best clones for your farm.</p>
+<p>📍 Visit us at Metamaywa•PO BOX 357 Keroka • 📞 0713 368 520 ,0113634286</p>
+</div>
+</div>
+</section>
+
+<!-- 3D Slider Section - Flowers First -->
+<section class="slider-section" id="featured">
+<p class="section-label">Featured</p>
+<h2>Premium Flowers 🌸</h2>
+<div class="swiper mySwiper">
+<div class="swiper-wrapper" id="swiperWrapper"></div>
+<div class="swiper-pagination"></div>
+</div>
+</section>
+
+<!-- Tea Clones + Flowers Combined -->
+<section id="clones">
+<p class="section-label">Our Plants</p>
+<h2>Tea Clones & Flowers</h2>
+<p class="section-sub">Search or filter by category. Contact us for pricing details</p>
+
+<div class="search-wrap">
+<input type="text" class="search-bar" id="searchInput" placeholder="🔍 Search... e.g. drought, purple, kalanchoe">
+</div>
+
+<div class="category-filters" id="categoryFilters"></div>
+
+<div class="grid" id="productGrid"></div>
+<div class="no-results" id="noResults" style="display:none">No plants found</div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+<p class="section-label">Our Farm</p>
+<h2>From Metamaywa Fields</h2>
+<div class="gallery">
+<img src="images/tea-field-1.jpg" alt="">
+<img src="images/tea-field-2.jpg" alt="">
+<img src="images/tea-field-3.jpg" alt="">
+<img src="images/tea-field-4.jpg" alt="">
+<img src="images/tea-field-5.jpg" alt="">
+<img src="images/tea-field-6.jpg" alt="">
+</div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="contact">
+<p class="section-label">Get in Touch</p>
+<h2>Contact Us</h2>
+<p>📍 Metamaywa Settlement Scheme, Near Keroka Town, Nyamira County</p>
+<p>📮 P.O. Box 357, Keroka</p>
+<p>📞 0713 368 520 / 0113 634 286</p>
+</section>
+
+<footer>
+© 2026 MARAGIA FARM — Growing Kenya’s Future, One Plant at a Time 🍃
+</footer>
+
+<!-- Ticker -->
+<div class="ticker">
+<div class="ticker-track">
+<span>31/8</span><span class="dot">◆</span>
+<span>914/39</span><span class="dot">◆</span>
+<span>COLEUS</span><span class="dot">◆</span>
+<span>KALANCHOE</span><span class="dot">◆</span>
+<span>PURPLE BASIL</span><span class="dot">◆</span>
+<span>31/8</span><span class="dot">◆</span>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+const MIN_ORDER = 200;
+const FLOWER_MIN = 20;
+const WHATSAPP = '254713368520';
+const TILL = '123456';
+
+const products = [
+{name:"Clone 31/8",img:"images/tea-field-1.jpg",desc:"High yield, early maturity",cats:["High Yield","Early Maturity"]},
+{name:"Clone 914/39",img:"images/tea-field-2.jpg",desc:"Drought tolerant, excellent cup",cats:["Drought Resistant","High Yield"]},
+{name:"Clone 895/7",img:"images/tea-field-3.jpg",desc:"High density, strong yields",cats:["High Density","High Yield"]},
+{name:"Clone 704/2",img:"images/tea-field-4.jpg",desc:"Adaptable to poor soils",cats:["Adaptable","All Soils"]},
+{name:"Clone 914/28",img:"images/914-28.jpg",desc:"Cold tolerant clone",cats:["Cold Tolerant","High Altitude"]},
+{name:"Clone 597/1",img:"images/597-1.jpg",desc:"High yield potential",cats:["High Yield","Fast Growth"]},
+{name:"Clone S15/10",img:"images/tea-field-5.jpg",desc:"TRFK recommended",cats:["TRFK Approved","All Regions"]},
+{name:"Clone 895/22",img:"images/tea-field-6.jpg",desc:"Good drought resistance",cats:["Drought Resistant","Steady Yield"]},
+{name:"Clone 914/11",img:"images/tea-field-7.jpg",desc:"Strong bush frame",cats:["Strong Bush","High Weight"]},
+{name:"Clone 895/17",img:"images/tea-field-1.jpg",desc:"Reliable all seasons",cats:["All Seasons","Reliable"]},
+{name:"Purple Tea",img:"images/tea-field-2.jpg",desc:"Antioxidant-rich specialty",cats:["Specialty","Antioxidant","Purple"]},
+];
+
+const flowers = [
+{id:"kalanchoe-pink-double",name:"Kalanchoe Pink Double",img:"images/flowers/kalanchoe-pink.jpg",desc:"Double pink flowering succulent. Long lasting blooms",cats:["Succulent","Flowering","Pink"]},
+{id:"kalanchoe",name:"Kalanchoe Bright",img:"images/flowers/kalanchoe.jpg",desc:"Vibrant colored Kalanchoe. Compact succulent",cats:["Succulent","Flowering"]},
+{id:"rex-begonia",name:"Rex Begonia",img:"images/flowers/rex-begonia.jpg",desc:"Ornamental foliage with silver + green patterns",cats:["Colorful Foliage","Indoor","Shade"]},
+{id:"begonia-mix",name:"Begonia Mix",img:"images/flowers/begonia-mix.jpg",desc:"Mixed color flowering begonia",cats:["Flowering","Shade","Outdoor"]},
+{id:"echeveria",name:"Echeveria Succulent",img:"images/flowers/echeveria.jpg",desc:"Blue-grey rosette with red tips",cats:["Succulent","Outdoor"]},
+{id:"tradescantia-zebrina",name:"Tradescantia Zebrina",img:"images/flowers/tradescantia-zebrina.jpg",desc:"Wandering Jew striped purple + green",cats:["Trailing","Colorful Foliage"]},
+{id:"tradescantia-purple",name:"Purple Heart",img:"images/flowers/tradescantia-purple.jpg",desc:"Deep purple trailing plant",cats:["Colorful Foliage","Trailing","Purple"]},
+{id:"anthurium-red",name:"Red Anthurium",img:"images/flowers/anthurium-red.jpg",desc:"Glossy red heart-shaped flowers",cats:["Flowering","Indoor","Red"]},
+{id:"purple-basil",name:"Purple Basil",img:"images/flowers/purple-basil.jpg",desc:"Aromatic herb with deep purple leaves",cats:["Herb","Edible","Purple"]},
+{id:"fittonia-pink",name:"Fittonia Pink",img:"images/flowers/fittonia-pink.jpg",desc:"Pink-veined nerve plant",cats:["Colorful Foliage","Indoor","Shade"]},
+{id:"rose-white",name:"White Rose",img:"images/flowers/rose-white.jpg",desc:"Classic white rose",cats:["Flowering","Outdoor","Cut Flower"]},
+{id:"coleus-mix",name:"Coleus Mix",img:"images/flowers/coleus-mix.jpg",desc:"Red, pink, yellow & green patterns",cats:["Colorful Foliage","Shade","Outdoor"]},
+];
+
+let cart = [];
+let orderProduct = null;
+
+// 3D SLIDER - Flowers first
+const flowerFirst = [
+...flowers.filter(f => f.cats.includes("Flowering")),
+...flowers.filter(f =>!f.cats.includes("Flowering"))
+];
+
+const swiperWrapper = document.getElementById('swiperWrapper');
+swiperWrapper.innerHTML = flowerFirst.map(flower => `
+<div class="swiper-slide">
+<div class="slide-card">
+<img src="${flower.img}" alt="${flower.name}">
+<div class="slide-body">
+<h3>${flower.name}</h3>
+<div class="slide-cats">${flower.cats.slice(0,2).map(c=>`<span class="cat-pill">${c}</span>`).join('')}</div>
+<p>${flower.desc}</p>
+<a href="/flower/${flower.id}" class="btn-shop">Shop Now</a>
+</div>
+</div>
+</div>
+`).join('');
+
+const swiper = new Swiper(".mySwiper", {
+effect: "coverflow",
+grabCursor: true,
+centeredSlides: true,
+slidesPerView: "auto",
+loop: flowerFirst.length > 3,
+coverflowEffect: {
+rotate: 40,
+stretch: 0,
+depth: 120,
+modifier: 1.2,
+slideShadows: true,
+},
+autoplay: {
+delay: 3000,
+disableOnInteraction: false,
+pauseOnMouseEnter: true,
+},
+pagination: {
+el: ".swiper-pagination",
+clickable: true,
+dynamicBullets: true
+},
+});
+
+// Categories
+const allCats = ['All',...new Set([...products,...flowers].flatMap(p=>p.cats))];
+const catDiv = document.getElementById('categoryFilters');
+allCats.forEach(cat=>{
+catDiv.innerHTML += `<button class="cat-btn ${cat==='All'?'active':''}" onclick="filterByCategory('${cat}')">${cat}</button>`;
+});
+
+// Render products with Add to Cart + Place Order
+function renderProducts(list=[...products,...flowers]){
+const grid = document.getElementById('productGrid');
+const noResults = document.getElementById('noResults');
+if(list.length===0){
+grid.innerHTML = '';
+noResults.style.display = 'block';
+return;
+}
+noResults.style.display = 'none';
+grid.innerHTML = list.map((p,i)=>{
+const isFlower = i >= products.length;
+const minText = isFlower? `Min ${FLOWER_MIN} plants` : `Min ${MIN_ORDER} seedlings`;
+return `
+<div class="card" data-cats="${p.cats.join(' ').toLowerCase()}">
+<div class="img-wrap">
+<img src="${p.img}" alt="${p.name}">
+<span class="tag">${isFlower?'Ornamental':'TRFK Certified'}</span>
+</div>
+<div class="card-body">
+<h3>${p.name}</h3>
+<div class="product-cats">${p.cats.map(c=>`<span class="cat-pill">${c}</span>`).join('')}</div>
+<p>${p.desc}</p>
+<p class="dop">${minText}</p>
+<div class="product-btns">
+<button class="btn-add" onclick="addToCart(${i})">Add to Cart</button>
+<button class="btn-order" onclick="placeOrder(${i})">Place Order</button>
+</div>
+</div>
+</div>`;
+}).join('');
+}
+renderProducts();
+
+// Search + Filter
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', filterProducts);
+
+let activeCategory = 'All';
+function filterByCategory(cat){
+activeCategory = cat;
+document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+event.target.classList.add('active');
+filterProducts();
+}
+
+function filterProducts(){
+const query = searchInput.value.toLowerCase();
+const allItems = [...products,...flowers];
+const filtered = allItems.filter(p=>{
+const matchesSearch = p.name.toLowerCase().includes(query) ||
+p.desc.toLowerCase().includes(query) ||
+p.cats.join(' ').toLowerCase().includes(query);
+const matchesCat = activeCategory==='All' || p.cats.includes(activeCategory);
+return matchesSearch && matchesCat;
+});
+renderProducts(filtered);
+}
+
+// Cart functions - NO PRICE
+function addToCart(idx){
+const item = cart.find(x=>x.idx===idx);
+const minQty = idx >= products.length? FLOWER_MIN : MIN_ORDER;
+if(item){item.qty += minQty}
+else{cart.push({idx,qty:minQty})}
+updateCart();
+alert(`${[...products,...flowers][idx].name} added to cart`);
+}
+
+function removeFromCart(idx){
+cart = cart.filter(x=>x.idx!==idx);
+updateCart();
+}
+
+function changeQty(idx,delta){
+const item = cart.find(x=>x.idx===idx);
+const minQty = idx >= products.length? FLOWER_MIN : MIN_ORDER;
+if(item){
+item.qty += delta;
+if(item.qty < minQty) item.qty = minQty;
+updateCart();
+}
+}
+
+function updateCart(){
+document.getElementById('cartCount').textContent = cart.reduce((a,b)=>a+b.qty,0);
+const cartDiv = document.getElementById('cartItems');
+
+if(cart.length===0){
+cartDiv.innerHTML = '<p style="text-align:center;color:#666">Cart is empty</p>';
+return;
+}
+
+const allItems = [...products,...flowers];
+cartDiv.innerHTML = cart.map(item=>{
+const p = allItems[item.idx];
+const minQty = item.idx >= products.length? FLOWER_MIN : MIN_ORDER;
+return `
+<div class="cart-item">
+<img src="${p.img}" alt="${p.name}">
+<div class="cart-item-info">
+<h4>${p.name}</h4>
+<p>${item.qty} plants</p>
+<div class="qty-controls">
+<button class="qty-btn" onclick="changeQty(${item.idx},-${minQty})">-</button>
+<span>${item.qty}</span>
+<button class="qty-btn" onclick="changeQty(${item.idx},${minQty})">+</button>
+<button class="qty-btn" onclick="removeFromCart(${item.idx})" style="background:#666">✕</button>
+</div>
+</div>
+</div>`;
+}).join('');
+}
+
+function toggleCart(){document.getElementById('cartSidebar').classList.toggle('open')}
+function toggleMenu(){document.getElementById('menuOverlay').classList.toggle('open')}
+
+// Place Order - NO AMOUNT SHOWN
+function placeOrder(idx){
+orderProduct = idx;
+document.getElementById('mpesaModal').classList.add('open');
+}
+
+function closeMpesa(){
+document.getElementById('mpesaModal').classList.remove('open');
+document.getElementById('mpesaCode').value = '';
+}
+
+function confirmMpesa(){
+const code = document.getElementById('mpesaCode').value.trim();
+if(code.length < 10){alert('Please paste your M-Pesa confirmation SMS');return}
+
+const allItems = [...products,...flowers];
+const p = allItems[orderProduct];
+const isFlower = orderProduct >= products.length;
+const qty = isFlower? FLOWER_MIN : MIN_ORDER;
+const type = isFlower? 'ORNAMENTAL' : 'TEA CLONE';
+
+const msg = `ORDER REQUEST: ${type} - ${p.name}\nQty: ${qty} plants/seedlings\nM-Pesa Code: ${code}\nTill: ${TILL}\n\nPlease confirm pricing and arrange delivery.`;
+window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+closeMpesa();
+}
+
+function checkoutWhatsApp(){
+if(cart.length===0){alert('Cart is empty');return}
+const allItems = [...products,...flowers];
+let msg = 'ORDER REQUEST:\n\n';
+cart.forEach(item=>{
+const p = allItems[item.idx];
+msg += `${p.name}: ${item.qty} plants\n`;
+});
+msg += `\nI have paid via M-Pesa to Till ${TILL}. Confirmation SMS: [paste here]\n\nPlease confirm pricing and arrange delivery.`;
+window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function speakToExpert(){
+const msg = 'Hello MARAGIA FARM, I need advice on choosing tea clones or ornamental plants. Please assist.';
+window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// Particles
+const particles=document.getElementById('particles');
+for(let i=0;i<40;i++){
+const p=document.createElement('div');
+p.className='particle';
+p.style.left=Math.random()*100+'%';
+p.style.animationDelay=Math.random()*15+'s';
+p.style.animationDuration=12+Math.random()*10+'s';
+particles.appendChild(p);
+}
+</script>
+
+</body>
+</html>
